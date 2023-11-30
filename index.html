@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="googlebot" content="noindex, nofollow">
+    <meta name="author" content="مهدی فرزانه ,mehdi farzaneh">
+    <script>localStorage.getItem("dark") === "on" ? document.querySelector("html").classList.add("dark"):''</script>
+    <link rel="shortcut icon" href="./public/favicon.ico" type="image/x-icon">
+    <link href="./public/css/app.css" rel="stylesheet">
+    <title>آپارات - سرویس اشتراک ویدیو</title>
+</head>
+<body class="dark:text-slate-100 dark:bg-slate-800 select-none font-byekan">
+    <div id="wrapper" class="fixed w-full hidden lg:hidden h-full bg-gray-800 z-40 opacity-50"></div>
+
+    <header class="flex items-center justify-between dark:bg-[#182231] bg-white px-3 lg:px-10 py-2 shadow dark:shadow-xl dark:shadow-slate-800 sticky top-0 right-0 w-full z-10">
+        <div class="flex items-center gap-x-2">
+            <button id="menu" class="p-2 lg:hidden block dark:hover:bg-slate-700 hover:bg-slate-100 rounded-full">
+                <svg class="text-2xl text-gray-500 dark:hover:text-slate-200" stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M64 384h384v-42.666H64V384zm0-106.666h384v-42.667H64v42.667zM64 128v42.665h384V128H64z"></path></svg>
+            </button>
+            <a href="/"><img width="70" src="./public/images/logo.png" alt="aparat"></a>
+        </div>
+
+        <form class="hidden lg:flex w-[550px] hover:border-gray-500 dark:border-slate-800 border items-center overflow-hidden dark:bg-slate-900 bg-gray-100 rounded-full pl-4 justify-between">
+            <input id="search" class="w-full bg-gray-100 dark:bg-slate-900 px-5 py-3 placeholder:text-gray-500" placeholder="جستجوی ویدیوهای رویدادها، شخصیت‌ها و ..." type="text">
+            <label for="search"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke-miterlimit="10" stroke-width="32" d="M221.09 64a157.09 157.09 0 10157.09 157.09A157.1 157.1 0 00221.09 64z"></path><path fill="none" stroke-linecap="round" stroke-miterlimit="10" stroke-width="32" d="M338.29 338.29L448 448"></path></svg></label>
+        </form>
+
+        <div class="flex items-center gap-x-4">
+            <a class="hidden lg:flex items-center border border-blue-400 hover:text-blue-400 text-blue-500 rounded-full px-3 py-2" href="/">
+                <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+                <span>بارگذاری ویدیو</span>
+            </a>
+            <a class="hidden lg:flex items-center text-gray-500 dark:text-slate-200 gap-x-1" href="/">
+                <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M858.5 763.6a374 374 0 0 0-80.6-119.5 375.63 375.63 0 0 0-119.5-80.6c-.4-.2-.8-.3-1.2-.5C719.5 518 760 444.7 760 362c0-137-111-248-248-248S264 225 264 362c0 82.7 40.5 156 102.8 201.1-.4.2-.8.3-1.2.5-44.8 18.9-85 46-119.5 80.6a375.63 375.63 0 0 0-80.6 119.5A371.7 371.7 0 0 0 136 901.8a8 8 0 0 0 8 8.2h60c4.4 0 7.9-3.5 8-7.8 2-77.2 33-149.5 87.8-204.3 56.7-56.7 132-87.9 212.2-87.9s155.5 31.2 212.2 87.9C779 752.7 810 825 812 902.2c.1 4.4 3.6 7.8 8 7.8h60a8 8 0 0 0 8-8.2c-1-47.8-10.9-94.3-29.5-138.2zM512 534c-45.9 0-89.1-17.9-121.6-50.4S340 407.9 340 362c0-45.9 17.9-89.1 50.4-121.6S466.1 190 512 190s89.1 17.9 121.6 50.4S684 316.1 684 362c0 45.9-17.9 89.1-50.4 121.6S557.9 534 512 534z"></path></svg>
+                <span>ورود و ثبت نام</span>
+            </a>
+            <svg class="lg:hidden text-gray-500 text-xl" stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M443.5 420.2L336.7 312.4c20.9-26.2 33.5-59.4 33.5-95.5 0-84.5-68.5-153-153.1-153S64 132.5 64 217s68.5 153 153.1 153c36.6 0 70.1-12.8 96.5-34.2l106.1 107.1c3.2 3.4 7.6 5.1 11.9 5.1 4.1 0 8.2-1.5 11.3-4.5 6.6-6.3 6.8-16.7.6-23.3zm-226.4-83.1c-32.1 0-62.3-12.5-85-35.2-22.7-22.7-35.2-52.9-35.2-84.9 0-32.1 12.5-62.3 35.2-84.9 22.7-22.7 52.9-35.2 85-35.2s62.3 12.5 85 35.2c22.7 22.7 35.2 52.9 35.2 84.9 0 32.1-12.5 62.3-35.2 84.9-22.7 22.7-52.9 35.2-85 35.2z"></path></svg>
+            <a class="flex lg:hidden text-sm gap-x-1 items-center border border-blue-400 hover:text-blue-400 text-blue-500 rounded-full px-3 py-1" href="/">
+                <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M858.5 763.6a374 374 0 0 0-80.6-119.5 375.63 375.63 0 0 0-119.5-80.6c-.4-.2-.8-.3-1.2-.5C719.5 518 760 444.7 760 362c0-137-111-248-248-248S264 225 264 362c0 82.7 40.5 156 102.8 201.1-.4.2-.8.3-1.2.5-44.8 18.9-85 46-119.5 80.6a375.63 375.63 0 0 0-80.6 119.5A371.7 371.7 0 0 0 136 901.8a8 8 0 0 0 8 8.2h60c4.4 0 7.9-3.5 8-7.8 2-77.2 33-149.5 87.8-204.3 56.7-56.7 132-87.9 212.2-87.9s155.5 31.2 212.2 87.9C779 752.7 810 825 812 902.2c.1 4.4 3.6 7.8 8 7.8h60a8 8 0 0 0 8-8.2c-1-47.8-10.9-94.3-29.5-138.2zM512 534c-45.9 0-89.1-17.9-121.6-50.4S340 407.9 340 362c0-45.9 17.9-89.1 50.4-121.6S466.1 190 512 190s89.1 17.9 121.6 50.4S684 316.1 684 362c0 45.9-17.9 89.1-50.4 121.6S557.9 534 512 534z"></path></svg>
+                <span>ورود</span>
+            </a>
+        </div>
+    </header>
+
+
+    <main class="overflow-hidden dark:bg-slate-800">
+        <aside id="aside" class="w-72 hidden lg:block dark:bg-[#182231] bg-[#FBFBFC] z-50 fixed top-0 lg:top-[60px] right-0 bottom-0 h-screen overflow-scroll scrollbar">
+
+            <ul>
+                <li class="bg-[#F5F5F9] dark:bg-slate-700">
+                    <svg class="text-theme" stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M8.36 1.37l6.36 5.8-.71.71L13 6.964v6.526l-.5.5h-3l-.5-.5v-3.5H7v3.5l-.5.5h-3l-.5-.5V6.972L2 7.88l-.71-.71 6.35-5.8h.72zM4 6.063v6.927h2v-3.5l.5-.5h3l.5.5v3.5h2V6.057L8 2.43 4 6.063z"></path></svg>
+                    <span>صفحه نخست</span>
+                </li>
+                <li>
+                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M14 10.25L17 8V14L14 11.75V14H7V8H14V10.25ZM5.76282 17H20V5H4V18.3851L5.76282 17ZM6.45455 19L2 22.5V4C2 3.44772 2.44772 3 3 3H21C21.5523 3 22 3.44772 22 4V18C22 18.5523 21.5523 19 21 19H6.45455Z"></path></svg>
+                    <span>لیست پخش زنده</span>
+                </li>
+                <li>
+                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill="none" d="M0 0h24v24H0z"></path><path d="M13 3a9 9 0 00-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42A8.954 8.954 0 0013 21a9 9 0 000-18zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"></path></svg>
+                    <span>سابقه تماشا</span>
+                </li>
+            </ul>
+
+            <div class="border w-full border-border dark:border-slate-800"></div>
+
+            <h3 class="text-theme pr-4 text-lg mt-3">بخش های دیگر</h3>
+            <ul class="mt-2">
+                <li>
+                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke-width="2" d="M12,6 L12,2 M12,6 C14.4983324,6.0444148 16.0056152,6 17,6 C19,6 21,6.5 22,10 C23,13.5 23,15.5 23,18 C23,20.5 21,21 19,21 C17,21 15.9456522,17 12,17 C8.05434783,17 7,21 5,21 C3,21 1,20.5 1,18 C1,15.5 1,13.5 2,10 C3,6.5 5,6 7,6 C7.99438477,6 9.50166757,6.0444148 12,6 L12,6 L12,6 Z M18,15 C18.5522847,15 19,14.5522847 19,14 C19,13.4477153 18.5522847,13 18,13 C17.4477153,13 17,13.4477153 17,14 C17,14.5522847 17.4477153,15 18,15 Z M14,12 C14.5522847,12 15,11.5522847 15,11 C15,10.4477153 14.5522847,10 14,10 C13.4477153,10 13,10.4477153 13,11 C13,11.5522847 13.4477153,12 14,12 Z M4,12 L10,12 M7,9 L7,15"></path></svg>
+                    <span>آپارات گیم</span>
+                </li>
+                <li>
+                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill="none" d="M0 0h24v24H0V0z"></path><path d="M11 6H9V4h2v2zm4-2h-2v2h2V4zM9 14h2v-2H9v2zm10-4V8h-2v2h2zm0 4v-2h-2v2h2zm-6 0h2v-2h-2v2zm6-10h-2v2h2V4zm-6 4V6h-2v2h2zm-6 2V8h2V6H7V4H5v16h2v-8h2v-2H7zm8 2h2v-2h-2v2zm-4-2v2h2v-2h-2zM9 8v2h2V8H9zm4 2h2V8h-2v2zm2-4v2h2V6h-2z"></path></svg>
+                    <span>آپارات اسپرت</span>
+                </li>
+                <li>
+                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 384 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M256 64A64 64 0 1 0 128 64a64 64 0 1 0 128 0zM152.9 169.3c-23.7-8.4-44.5-24.3-58.8-45.8L74.6 94.2C64.8 79.5 45 75.6 30.2 85.4s-18.7 29.7-8.9 44.4L40.9 159c18.1 27.1 42.8 48.4 71.1 62.4V480c0 17.7 14.3 32 32 32s32-14.3 32-32V384h32v96c0 17.7 14.3 32 32 32s32-14.3 32-32V221.6c29.1-14.2 54.4-36.2 72.7-64.2l18.2-27.9c9.6-14.8 5.4-34.6-9.4-44.3s-34.6-5.5-44.3 9.4L291 122.4c-21.8 33.4-58.9 53.6-98.8 53.6c-12.6 0-24.9-2-36.6-5.8c-.9-.3-1.8-.7-2.7-.9z"></path></svg>
+                    <span>آپارات کودک</span>
+                </li>
+                <li>
+                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1.1" viewBox="0 0 16 16" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M6 6l5 3.5-5 3.5v-7z"></path><path d="M14.341 3.579c-0.347-0.473-0.831-1.027-1.362-1.558s-1.085-1.015-1.558-1.362c-0.806-0.591-1.197-0.659-1.421-0.659h-7.75c-0.689 0-1.25 0.561-1.25 1.25v13.5c0 0.689 0.561 1.25 1.25 1.25h11.5c0.689 0 1.25-0.561 1.25-1.25v-9.75c0-0.224-0.068-0.615-0.659-1.421zM12.271 2.729c0.48 0.48 0.856 0.912 1.134 1.271h-2.406v-2.405c0.359 0.278 0.792 0.654 1.271 1.134zM14 14.75c0 0.136-0.114 0.25-0.25 0.25h-11.5c-0.135 0-0.25-0.114-0.25-0.25v-13.5c0-0.135 0.115-0.25 0.25-0.25 0 0 7.749-0 7.75 0v3.5c0 0.276 0.224 0.5 0.5 0.5h3.5v9.75z"></path></svg>
+                    <span>فیلیمو مدرسه</span>
+                </li>
+                <li>
+                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M55 18v476h18v-37h46v37h274v-37h46v37h18V18h-18v37h-46V18h-18v60H137V18h-18v37H73V18H55zm18 55h46v46H73V73zm320 0h46v46h-46V73zm-256 41h238v156H137V114zm-64 23h46v46H73v-46zm320 0h46v46h-46v-46zM73 201h46v46H73v-46zm320 0h46v46h-46v-46zM73 265h46v46H73v-46zm320 0h46v46h-46v-46zm-256 41h238v156H137V306zm-64 23h46v46H73v-46zm320 0h46v46h-46v-46zM73 393h46v46H73v-46zm320 0h46v46h-46v-46z"></path></svg>
+                    <span>فیلم و سریال</span>
+                </li>
+                <li>
+                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M138.2 22.71c-25.5-.14-45.82 38.57-50.14 80.29H32v18h55.23c.07 6.1.49 12.1 1.33 18l17.34-18h25.5c-3.8 3.9-7.9 7.7-12.1 11.8l-31.24 32.5v-.1c-.53.6-1.1 1.2-1.64 1.8H32v18h38.17c-12.95 14.6-25.91 30.2-35.67 46H34v.8c-8.09 13.3-13.89 26.8-15.44 39.9-3.5 33.5 9.52 67.3 33.39 87.3H32v18h65.54c2.56.1 5.16.1 7.86 0h20.1c3.7 20.7 7 41.2 8.9 60 .4 3.6-6.6 10.6-10 11.4 0-22-17.8-39.9-39.84-39.9-21.9 0-39.8 17.9-39.8 39.9.1 20.1 15.2 35.8 35 39.5 41.84 7.7 78.34-17.9 72.44-53-2.9-19.1-6.2-38.5-9.7-57.9H480v-18H139.3c-2.9-15.5-5.8-30.9-8.5-46h37.3c-2.6 7.8-8.1 15.9-15.4 23l3.7 20.8c15.5-11.3 31.3-26.6 35.7-43.8H480v-18H192.9c-1.6-14.5-7.8-30.8-17.8-39.9-2.5-2.3-5.1-4.3-7.8-6.1H480v-18H116.8c-1.2-7.7-1.9-11.8-2.7-16.4l-15.54 15.1c.08.4.17.9.25 1.3H72.63c12.31-16.2 26.52-30.9 41.17-46H480v-18H130.9c10.5-11.3 20.9-23.2 30.7-36.4 2-2.8 3.8-6 5.3-9.6H480v-18H172.1c2.5-12.89 2.7-26.36 1.2-35.24-2.7-16.12-14.2-42.89-31.9-44.83-1.1-.14-2.1-.22-3.2-.22zm-5.5 37c6.9.1 14.4 5.8 15.6 15.95 1.3 11.18-.3 19.87-3.8 27.34h-36c3.4-20 11.2-42.23 24.2-43.29zM60.23 249h31.24c-13.45 12.5-19.59 29.6-18.93 46H42.79c.04-5.6.98-11.3 2.97-17 4.02-10.4 8.93-20 14.47-29zm63.57 11.3c11.8-.3 26.9 5.8 34 12.9 5.7 6.2 9.6 14.1 11.2 21.8h-41.5c-2.1-11.8-4.2-23.4-6-34.6.7-.1 1.5-.1 2.3-.1zm-19.4 6.5c1.5 8.9 3.3 18.4 5.2 28.2H90.63c.1-11 4.22-21.2 13.77-28.2zM45.75 313h30.39c2.69 7.2 6.83 13.9 12.42 19.4 5.1 5.2 15.14-2.7 10-8.6-1.93-3.5-3.54-7.1-4.81-10.8h19.35c3 15 6.1 30.5 9.1 46h-20v-.1c-25.44-3.3-48.49-22.3-56.45-45.9z"></path></svg>
+                    <span>آپارات موزیک</span>
+                </li>
+            </ul>
+
+            <div class="border w-full border-border dark:border-slate-800"></div>
+
+            <div class="p-5 text-justify text-gray-500 text-sm leading-7">
+                <span>برای دنبال کردن کانال ها، مشاهده ویدیوهای پیشنهادی مطابق با سلیقه شما و تجربه کاربری بهتر وارد شوید.</span>
+                <a class="flex items-center mt-3 w-fit border border-blue-400 hover:text-blue-400 text-blue-500 rounded-full px-3 py-1" href="/">
+                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M858.5 763.6a374 374 0 0 0-80.6-119.5 375.63 375.63 0 0 0-119.5-80.6c-.4-.2-.8-.3-1.2-.5C719.5 518 760 444.7 760 362c0-137-111-248-248-248S264 225 264 362c0 82.7 40.5 156 102.8 201.1-.4.2-.8.3-1.2.5-44.8 18.9-85 46-119.5 80.6a375.63 375.63 0 0 0-80.6 119.5A371.7 371.7 0 0 0 136 901.8a8 8 0 0 0 8 8.2h60c4.4 0 7.9-3.5 8-7.8 2-77.2 33-149.5 87.8-204.3 56.7-56.7 132-87.9 212.2-87.9s155.5 31.2 212.2 87.9C779 752.7 810 825 812 902.2c.1 4.4 3.6 7.8 8 7.8h60a8 8 0 0 0 8-8.2c-1-47.8-10.9-94.3-29.5-138.2zM512 534c-45.9 0-89.1-17.9-121.6-50.4S340 407.9 340 362c0-45.9 17.9-89.1 50.4-121.6S466.1 190 512 190s89.1 17.9 121.6 50.4S684 316.1 684 362c0 45.9-17.9 89.1-50.4 121.6S557.9 534 512 534z"></path></svg>
+                    <span>ورود به آپارات</span>
+                </a>
+            </div>
+
+            <div class="border w-full border-border dark:border-slate-800"></div>
+            
+            <ul>
+                <li onclick="toggleDarkMode()">
+                    <span id="darkMode-icon">
+                    </span>
+                    <span id="darkMode-text">حالت شب</span>
+                </li>
+                <li>
+                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 20 20" aria-hidden="true" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M8 16.25a.75.75 0 01.75-.75h2.5a.75.75 0 010 1.5h-2.5a.75.75 0 01-.75-.75z"></path><path fill-rule="evenodd" d="M4 4a3 3 0 013-3h6a3 3 0 013 3v12a3 3 0 01-3 3H7a3 3 0 01-3-3V4zm4-1.5v.75c0 .414.336.75.75.75h2.5a.75.75 0 00.75-.75V2.5h1A1.5 1.5 0 0114.5 4v12a1.5 1.5 0 01-1.5 1.5H7A1.5 1.5 0 015.5 16V4A1.5 1.5 0 017 2.5h1z" clip-rule="evenodd"></path></svg>
+                    <span>آپارات در موبایل</span>
+                </li>
+            </ul>
+
+            <div class="border w-full border-border dark:border-slate-800"></div>
+
+            <ul>
+                <li>
+                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M464 256A208 208 0 1 0 48 256a208 208 0 1 0 416 0zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm169.8-90.7c7.9-22.3 29.1-37.3 52.8-37.3h58.3c34.9 0 63.1 28.3 63.1 63.1c0 22.6-12.1 43.5-31.7 54.8L280 264.4c-.2 13-10.9 23.6-24 23.6c-13.3 0-24-10.7-24-24V250.5c0-8.6 4.6-16.5 12.1-20.8l44.3-25.4c4.7-2.7 7.6-7.7 7.6-13.1c0-8.4-6.8-15.1-15.1-15.1H222.6c-3.4 0-6.4 2.1-7.5 5.3l-.4 1.2c-4.4 12.5-18.2 19-30.6 14.6s-19-18.2-14.6-30.6l.4-1.2zM224 352a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z"></path></svg>
+                    <span>پشتیبانی</span>
+                </li>
+                <li>
+                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill="none" d="M0 0h24v24H0z"></path><path d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"></path><path d="M14 17H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"></path></svg>
+                    <span>بلاگ آپارات</span>
+                </li>
+                <li>
+                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M866.9 169.9L527.1 54.1C523 52.7 517.5 52 512 52s-11 .7-15.1 2.1L157.1 169.9c-8.3 2.8-15.1 12.4-15.1 21.2v482.4c0 8.8 5.7 20.4 12.6 25.9L499.3 968c3.5 2.7 8 4.1 12.6 4.1s9.2-1.4 12.6-4.1l344.7-268.6c6.9-5.4 12.6-17 12.6-25.9V191.1c.2-8.8-6.6-18.3-14.9-21.2zM810 654.3L512 886.5 214 654.3V226.7l298-101.6 298 101.6v427.6zM402.9 528.8l-77.5 77.5a8.03 8.03 0 0 0 0 11.3l34 34c3.1 3.1 8.2 3.1 11.3 0l77.5-77.5c55.7 35.1 130.1 28.4 178.6-20.1 56.3-56.3 56.3-147.5 0-203.8-56.3-56.3-147.5-56.3-203.8 0-48.5 48.5-55.2 123-20.1 178.6zm65.4-133.3c31.3-31.3 82-31.3 113.2 0 31.3 31.3 31.3 82 0 113.2-31.3 31.3-82 31.3-113.2 0s-31.3-81.9 0-113.2z"></path></svg>
+                    <span>قوانین</span>
+                </li>
+                <li>
+                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><rect width="416" height="288" x="48" y="144" fill="none" stroke-linejoin="round" stroke-width="32" rx="48" ry="48"></rect><path fill="none" stroke-linejoin="round" stroke-width="32" d="M411.36 144v-30A50 50 0 00352 64.9L88.64 109.85A50 50 0 0048 159v49"></path><path d="M368 320a32 32 0 1132-32 32 32 0 01-32 32z"></path></svg>
+                    <span>درآمدزایی</span>
+                </li>
+                <li>
+                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 256 256" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M168,224a8,8,0,0,1-8,8H96a8,8,0,0,1,0-16h64A8,8,0,0,1,168,224ZM227.39,60.32a111.36,111.36,0,0,0-39.12-43.08,8,8,0,1,0-8.54,13.53,94.13,94.13,0,0,1,33.46,36.91,8,8,0,0,0,14.2-7.36ZM35.71,72a8,8,0,0,0,7.1-4.32A94.13,94.13,0,0,1,76.27,30.77a8,8,0,1,0-8.54-13.53A111.36,111.36,0,0,0,28.61,60.32,8,8,0,0,0,35.71,72Zm186.1,103.94A16,16,0,0,1,208,200H48a16,16,0,0,1-13.79-24.06C43.22,160.39,48,138.28,48,112a80,80,0,0,1,160,0C208,138.27,212.78,160.38,221.81,175.94ZM208,184c-10.64-18.27-16-42.49-16-72a64,64,0,0,0-128,0c0,29.52-5.38,53.74-16,72Z"></path></svg>
+                    <span>تبلیغات</span>
+                </li>
+                <li>
+                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 256 256" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M244.8,150.4a8,8,0,0,1-11.2-1.6A51.6,51.6,0,0,0,192,128a8,8,0,0,1-7.37-4.89,8,8,0,0,1,0-6.22A8,8,0,0,1,192,112a24,24,0,1,0-23.24-30,8,8,0,1,1-15.5-4A40,40,0,1,1,219,117.51a67.94,67.94,0,0,1,27.43,21.68A8,8,0,0,1,244.8,150.4ZM190.92,212a8,8,0,1,1-13.84,8,57,57,0,0,0-98.16,0,8,8,0,1,1-13.84-8,72.06,72.06,0,0,1,33.74-29.92,48,48,0,1,1,58.36,0A72.06,72.06,0,0,1,190.92,212ZM128,176a32,32,0,1,0-32-32A32,32,0,0,0,128,176ZM72,120a8,8,0,0,0-8-8A24,24,0,1,1,87.24,82a8,8,0,1,0,15.5-4A40,40,0,1,0,37,117.51,67.94,67.94,0,0,0,9.6,139.19a8,8,0,1,0,12.8,9.61A51.6,51.6,0,0,1,64,128,8,8,0,0,0,72,120Z"></path></svg>
+                    <span>درباره ما</span>
+                </li>
+            </ul>
+
+            <div class="border mt-2 w-full border-border dark:border-slate-800"></div>
+
+            <section class="flex px-9 text-2xl mt-4 text-gray-500 dark:text-slate-300 justify-between items-center mb-20">
+                <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"></path></svg>
+                <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 448 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"></path></svg>
+                <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 256 256" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M236.88,26.19a9,9,0,0,0-9.16-1.57L25.06,103.93a14.22,14.22,0,0,0,2.43,27.21L80,141.45V200a15.92,15.92,0,0,0,10,14.83,15.91,15.91,0,0,0,17.51-3.73l25.32-26.26L173,220a15.88,15.88,0,0,0,10.51,4,16.3,16.3,0,0,0,5-.79,15.85,15.85,0,0,0,10.67-11.63L239.77,35A9,9,0,0,0,236.88,26.19Zm-61.14,36L86.15,126.35l-49.6-9.73ZM96,200V152.52l24.79,21.74Zm87.53,8L100.85,135.5l119-85.29Z"></path></svg>
+                <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 448 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M100.28 448H7.4V148.9h92.88zM53.79 108.1C24.09 108.1 0 83.5 0 53.8a53.79 53.79 0 0 1 107.58 0c0 29.7-24.1 54.3-53.79 54.3zM447.9 448h-92.68V302.4c0-34.7-.7-79.2-48.29-79.2-48.29 0-55.69 37.7-55.69 76.7V448h-92.78V148.9h89.08v40.8h1.3c12.4-23.5 42.69-48.3 87.88-48.3 94 0 111.28 61.9 111.28 142.3V448z"></path></svg>
+            </section>
+        </aside>
+
+        <div class="container w-full px-4 lg:pr-[280px] overflow-hidden">
+            <section class="relative">
+                <div class="mt-7">
+                    <h2 class="text-lg">ویژه های آپارات</h2>
+                    <section class="grid mt-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-y-7 gap-x-2">
+    
+                        <div class="overflow-hidden">
+                            <div class="relative">
+                                <img src="./public/images/posters/1.webp">
+                                <span class="rounded-md absolute left-2 bottom-2 px-1 py-[1px] bg-gray-900 opacity-70 text-white text-sm">02:49</span>
+                            </div>
+                            <a class="mt-2" href="/"><span class="truncate">آهنگ جدید محسن چاوشی به نام یه پاییز</span></a>
+                            <a class="item-owner truncate flex items-center gap-x-1 mt-0.5 w-full text-gray-500 text-sm" href="/"><span>Mohsen Chavoshi | محسن چاوشی</span><svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1" viewBox="0 0 48 48" enable-background="new 0 0 48 48" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><circle fill="#4CAF50" cx="24" cy="24" r="21"></circle><polygon fill="#CCFF90" points="34.6,14.6 21,28.2 15.4,22.6 12.6,25.4 21,33.8 37.4,17.4"></polygon></svg></a>
+                            <span class="text-gray-500 text-sm">
+                                <span>6.7 هزار بازدید</span>
+                                <span>14 ساعت پیش</span>
+                            </span>
+                        </div>
+    
+                        <div class="overflow-hidden">
+                            <div class="relative">
+                                <img src="./public/images/posters/2.webp">
+                                <span class="rounded-md absolute left-2 bottom-2 px-1 py-[1px] bg-gray-900 opacity-70 text-white text-sm">08:01</span>
+                            </div>
+                            <a class="mt-2 pl-4" href="/"><span class="truncate">گزارش اختصاصی آپارات اسپرت از شروع تمرینات تیم ملی فوتبال</span></a>
+                            <a class="item-owner truncate flex items-center gap-x-1 mt-0.5 w-full text-gray-500 text-sm" href="/"><span>Mohsen Chavoshi | محسن چاوشی</span><svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1" viewBox="0 0 48 48" enable-background="new 0 0 48 48" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><circle fill="#4CAF50" cx="24" cy="24" r="21"></circle><polygon fill="#CCFF90" points="34.6,14.6 21,28.2 15.4,22.6 12.6,25.4 21,33.8 37.4,17.4"></polygon></svg></a>
+                            <span class="text-gray-500 text-sm">
+                                <span>16.8 هزار بازدید</span>
+                                <span>۱ روز پیش</span>
+                            </span>
+                        </div>
+    
+                        <div class="overflow-hidden">
+                            <div class="relative">
+                                <img src="./public/images/posters/3.webp">
+                                <span class="rounded-md absolute left-2 bottom-2 px-1 py-[1px] bg-gray-900 opacity-70 text-white text-sm">08:01</span>
+                            </div>
+                            <a class="mt-2 pl-4" href="/"><span class="truncate">چطوری ویدیو بدون لرزش بگیریم؟ | آموزش کاهش لرزش ویدیو | آموزش ادیت با کپکات</span></a>
+                            <a class="item-owner truncate flex items-center gap-x-1 mt-0.5 w-full text-gray-500 text-sm" href="/"><span>میس جادوگر</span><svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1" viewBox="0 0 48 48" enable-background="new 0 0 48 48" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><circle fill="#4CAF50" cx="24" cy="24" r="21"></circle><polygon fill="#CCFF90" points="34.6,14.6 21,28.2 15.4,22.6 12.6,25.4 21,33.8 37.4,17.4"></polygon></svg></a>
+                            <span class="text-gray-500 text-sm">
+                                <span>6.7 هزار بازدید</span>
+                                <span>14 ساعت پیش</span>
+                            </span>
+                        </div>
+    
+                        <div class="overflow-hidden">
+                            <div class="relative">
+                                <img src="./public/images/posters/5.webp">
+                                <span class="rounded-md absolute left-2 bottom-2 px-1 py-[1px] bg-gray-900 opacity-70 text-white text-sm">08:01</span>
+                            </div>
+                            <a class="mt-2" href="/"><span class="truncate">یه تکنیک باحال برای ساخت استاپ موشن و موزیک ویدیو</span></a>
+                            <a class="item-owner truncate flex items-center gap-x-1 mt-1 w-full text-gray-500 text-sm" href="/"><span>CINEMA 360 | امیرحسین دربهانی</span></a>
+                            <span class="text-gray-500 text-sm">
+                                <span>6.7 هزار بازدید</span>
+                                <span>14 ساعت پیش</span>
+                            </span>
+                        </div>
+    
+                        <div class="overflow-hidden">
+                            <div class="relative">
+                                <img src="./public/images/posters/4.webp">
+                                <span class="rounded-md absolute left-2 bottom-2 px-1 py-[1px] bg-gray-900 opacity-70 text-white text-sm">08:01</span>
+                            </div>
+                            <a class="mt-2" href="/"><span class="truncate">رمز و راز اناربیج اصیل گیلانی به روش مامان جون با بهنام رستمی</span></a>
+                            <a class="item-owner truncate flex items-center gap-x-1 w-full text-gray-500 text-sm" href="/"><span>Mohsen Chavoshi | محسن چاوشی</span><svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1" viewBox="0 0 48 48" enable-background="new 0 0 48 48" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><circle fill="#4CAF50" cx="24" cy="24" r="21"></circle><polygon fill="#CCFF90" points="34.6,14.6 21,28.2 15.4,22.6 12.6,25.4 21,33.8 37.4,17.4"></polygon></svg></a>
+                            <span class="text-gray-500 text-sm">
+                                <span>6.7 هزار بازدید</span>
+                                <span>14 ساعت پیش</span>
+                            </span>
+                        </div>
+    
+                        <div class="overflow-hidden">
+                            <div class="relative">
+                                <img src="./public/images/posters/6.webp">
+                                <span class="rounded-md absolute left-2 bottom-2 px-1 py-[1px] bg-gray-900 opacity-70 text-white text-sm">08:01</span>
+                            </div>
+                            <a class="mt-2" href="/"><span class="truncate">ریسپکت پرایم جدید گروه بهمن | معرفی آخرین خودرو akharinkhodro</span></a>
+                            <a class="item-owner truncate flex items-center gap-x-1 w-full text-gray-500 text-sm" href="/"><span>Mohsen Chavoshi | محسن چاوشی</span><svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1" viewBox="0 0 48 48" enable-background="new 0 0 48 48" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><circle fill="#4CAF50" cx="24" cy="24" r="21"></circle><polygon fill="#CCFF90" points="34.6,14.6 21,28.2 15.4,22.6 12.6,25.4 21,33.8 37.4,17.4"></polygon></svg></a>
+                            <span class="text-gray-500 text-sm">
+                                <span>6.7 هزار بازدید</span>
+                                <span>14 ساعت پیش</span>
+                            </span>
+                        </div>
+    
+                        <div class="overflow-hidden">
+                            <div class="relative">
+                                <img src="./public/images/posters/8.webp">
+                                <span class="rounded-md absolute left-2 bottom-2 px-1 py-[1px] bg-gray-900 opacity-70 text-white text-sm">08:01</span>
+                            </div>
+                            <a class="mt-2" href="/"><span class="truncate">طرزتهیه کتلت با سبزیجات طبیعی در روستا_ زندگی روستایی</span></a>
+                            <a class="item-owner truncate flex items-center gap-x-1 w-full text-gray-500 text-sm" href="/"><span>Mohsen Chavoshi | محسن چاوشی</span><svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1" viewBox="0 0 48 48" enable-background="new 0 0 48 48" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><circle fill="#4CAF50" cx="24" cy="24" r="21"></circle><polygon fill="#CCFF90" points="34.6,14.6 21,28.2 15.4,22.6 12.6,25.4 21,33.8 37.4,17.4"></polygon></svg></a>
+                            <span class="text-gray-500 text-sm">
+                                <span>6.7 هزار بازدید</span>
+                                <span>14 ساعت پیش</span>
+                            </span>
+                        </div>
+    
+                        <div class="overflow-hidden">
+                            <div class="relative">
+                                <img src="./public/images/posters/7.webp">
+                                <span class="rounded-md absolute left-2 bottom-2 px-1 py-[1px] bg-gray-900 opacity-70 text-white text-sm">08:01</span>
+                            </div>
+                            <a class="mt-2" href="/"><span class="truncate">شش فیلم جدید و کمتر دیده شده  2023 - قسمت دوم</span></a>
+                            <a class="item-owner truncate flex items-center gap-x-1 w-full text-gray-500 text-sm" href="/"><span>Mohsen Chavoshi | محسن چاوشی</span><svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1" viewBox="0 0 48 48" enable-background="new 0 0 48 48" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><circle fill="#4CAF50" cx="24" cy="24" r="21"></circle><polygon fill="#CCFF90" points="34.6,14.6 21,28.2 15.4,22.6 12.6,25.4 21,33.8 37.4,17.4"></polygon></svg></a>
+                            <span class="text-gray-500 text-sm">
+                                <span>6.7 هزار بازدید</span>
+                                <span>14 ساعت پیش</span>
+                            </span>
+                        </div>
+    
+                        <div class="overflow-hidden">
+                            <div class="relative">
+                                <img src="./public/images/posters/9.webp">
+                                <span class="rounded-md absolute left-2 bottom-2 px-1 py-[1px] bg-gray-900 opacity-70 text-white text-sm">08:01</span>
+                            </div>
+                            <a class="mt-2 pl-4" href="/"><span class="truncate">گیتی خامنه می خواهد این دختربچه را پیدا کنند!</span></a>
+                            <a class="item-owner truncate flex items-center gap-x-1 w-full text-gray-500 text-sm" href="/"><span>Mohsen Chavoshi | محسن چاوشی</span><svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1" viewBox="0 0 48 48" enable-background="new 0 0 48 48" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><circle fill="#4CAF50" cx="24" cy="24" r="21"></circle><polygon fill="#CCFF90" points="34.6,14.6 21,28.2 15.4,22.6 12.6,25.4 21,33.8 37.4,17.4"></polygon></svg></a>
+                            <span class="text-gray-500 text-sm">
+                                <span>6.7 هزار بازدید</span>
+                                <span>14 ساعت پیش</span>
+                            </span>
+                        </div>
+    
+                        <div class="overflow-hidden">
+                            <div class="relative">
+                                <img src="./public/images/posters/10.webp">
+                                <span class="rounded-md absolute left-2 bottom-2 px-1 py-[1px] bg-gray-900 opacity-70 text-white text-sm">08:01</span>
+                            </div>
+                            <a class="mt-2 pl-4" href="/"><span class="truncate">گزارش اختصاصی آپارات اسپرت از شروع تمرینات تیم ملی فوتبال</span></a>
+                            <a class="item-owner truncate flex items-center gap-x-1 w-full text-gray-500 text-sm" href="/"><span>Mohsen Chavoshi | محسن چاوشی</span><svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1" viewBox="0 0 48 48" enable-background="new 0 0 48 48" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><circle fill="#4CAF50" cx="24" cy="24" r="21"></circle><polygon fill="#CCFF90" points="34.6,14.6 21,28.2 15.4,22.6 12.6,25.4 21,33.8 37.4,17.4"></polygon></svg></a>
+                            <span class="text-gray-500 text-sm">
+                                <span>6.7 هزار بازدید</span>
+                                <span>14 ساعت پیش</span>
+                            </span>
+                        </div>
+                    </section>
+                </div>
+            </section>
+    
+    
+            <section class="relative">
+                <div class="mt-10">
+                    <h2 class="text-lg">آپارات موزیک</h2>
+                    <section class="grid mt-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-y-7 gap-x-2">
+    
+                        <div class="overflow-hidden">
+                            <div class="relative">
+                                <img src="./public/images/music/1.webp">
+                                <span class="rounded-md absolute left-2 bottom-2 px-1 py-[1px] bg-gray-900 opacity-70 text-white text-sm">02:49</span>
+                            </div>
+                            <a class="mt-2 ol-4" href="/"><span class="truncate">آهنگ جدید ناصر زینلی بنام همسفر</span></a>
+                            <a class="item-owner truncate flex items-center gap-x-1 mt-0.5 w-full text-gray-500 text-sm" href="/"><span>Mohsen Chavoshi | محسن چاوشی</span><svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1" viewBox="0 0 48 48" enable-background="new 0 0 48 48" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><circle fill="#4CAF50" cx="24" cy="24" r="21"></circle><polygon fill="#CCFF90" points="34.6,14.6 21,28.2 15.4,22.6 12.6,25.4 21,33.8 37.4,17.4"></polygon></svg></a>
+                            <span class="text-gray-500 text-sm">
+                                <span>6.7 هزار بازدید</span>
+                                <span>14 ساعت پیش</span>
+                            </span>
+                        </div>
+    
+                        <div class="overflow-hidden">
+                            <div class="relative">
+                                <img src="./public/images/music/2.webp">
+                                <span class="rounded-md absolute left-2 bottom-2 px-1 py-[1px] bg-gray-900 opacity-70 text-white text-sm">08:01</span>
+                            </div>
+                            <a class="mt-2 pl-4" href="/"><span class="truncate">آهنگ جدید مهدی جهانی بنام نگاه آخر</span></a>
+                            <a class="item-owner truncate flex items-center gap-x-1 mt-0.5 w-full text-gray-500 text-sm" href="/"><span>Mohsen Chavoshi | محسن چاوشی</span><svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1" viewBox="0 0 48 48" enable-background="new 0 0 48 48" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><circle fill="#4CAF50" cx="24" cy="24" r="21"></circle><polygon fill="#CCFF90" points="34.6,14.6 21,28.2 15.4,22.6 12.6,25.4 21,33.8 37.4,17.4"></polygon></svg></a>
+                            <span class="text-gray-500 text-sm">
+                                <span>16.8 هزار بازدید</span>
+                                <span>۱ روز پیش</span>
+                            </span>
+                        </div>
+    
+                        <div class="overflow-hidden">
+                            <div class="relative">
+                                <img src="./public/images/music/3.webp">
+                                <span class="rounded-md absolute left-2 bottom-2 px-1 py-[1px] bg-gray-900 opacity-70 text-white text-sm">08:01</span>
+                            </div>
+                            <a class="mt-2 pl-4" href="/"><span class="truncate">آهنگ جدید اشوان بنام فکر من نباش</span></a>
+                            <a class="item-owner truncate flex items-center gap-x-1 mt-0.5 w-full text-gray-500 text-sm" href="/"><span>میس جادوگر</span><svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1" viewBox="0 0 48 48" enable-background="new 0 0 48 48" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><circle fill="#4CAF50" cx="24" cy="24" r="21"></circle><polygon fill="#CCFF90" points="34.6,14.6 21,28.2 15.4,22.6 12.6,25.4 21,33.8 37.4,17.4"></polygon></svg></a>
+                            <span class="text-gray-500 text-sm">
+                                <span>6.7 هزار بازدید</span>
+                                <span>14 ساعت پیش</span>
+                            </span>
+                        </div>
+    
+                        <div class="overflow-hidden">
+                            <div class="relative">
+                                <img src="./public/images/music/4.webp">
+                                <span class="rounded-md absolute left-2 bottom-2 px-1 py-[1px] bg-gray-900 opacity-70 text-white text-sm">08:01</span>
+                            </div>
+                            <a class="mt-2" href="/"><span class="truncate">اجرای زنده فرزاد فرزین بنام جواهر</span></a>
+                            <a class="item-owner truncate flex items-center gap-x-1 mt-1 w-full text-gray-500 text-sm" href="/"><span>CINEMA 360 | امیرحسین دربهانی</span></a>
+                            <span class="text-gray-500 text-sm">
+                                <span>6.7 هزار بازدید</span>
+                                <span>14 ساعت پیش</span>
+                            </span>
+                        </div>
+    
+                        <div class="overflow-hidden">
+                            <div class="relative">
+                                <img src="./public/images/music/5.webp">
+                                <span class="rounded-md absolute left-2 bottom-2 px-1 py-[1px] bg-gray-900 opacity-70 text-white text-sm">08:01</span>
+                            </div>
+                            <a class="mt-2" href="/"><span class="truncate">آهنگ جدید آصف آریا بنام چیه این عشق</span></a>
+                            <a class="item-owner truncate flex items-center gap-x-1 w-full text-gray-500 text-sm" href="/"><span>Mohsen Chavoshi | محسن چاوشی</span><svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1" viewBox="0 0 48 48" enable-background="new 0 0 48 48" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><circle fill="#4CAF50" cx="24" cy="24" r="21"></circle><polygon fill="#CCFF90" points="34.6,14.6 21,28.2 15.4,22.6 12.6,25.4 21,33.8 37.4,17.4"></polygon></svg></a>
+                            <span class="text-gray-500 text-sm">
+                                <span>6.7 هزار بازدید</span>
+                                <span>14 ساعت پیش</span>
+                            </span>
+                        </div>
+                    </section>
+                </div>
+            </section>
+    
+            <section class="relative">
+                <div class="mt-10">
+                    <h2 class="text-lg">ورزشی</h2>
+                    <section class="grid mt-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-y-7 gap-x-2">
+    
+                        <div class="overflow-hidden">
+                            <div class="relative">
+                                <img src="./public/images/sports/1.webp">
+                                <span class="rounded-md absolute left-2 bottom-2 px-1 py-[1px] bg-gray-900 opacity-70 text-white text-sm">02:49</span>
+                            </div>
+                            <a class="mt-2 ol-4" href="/"><span class="truncate">آهنگ جدید ناصر زینلی بنام همسفر</span></a>
+                            <a class="item-owner truncate flex items-center gap-x-1 mt-0.5 w-full text-gray-500 text-sm" href="/"><span>Mohsen Chavoshi | محسن چاوشی</span><svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1" viewBox="0 0 48 48" enable-background="new 0 0 48 48" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><circle fill="#4CAF50" cx="24" cy="24" r="21"></circle><polygon fill="#CCFF90" points="34.6,14.6 21,28.2 15.4,22.6 12.6,25.4 21,33.8 37.4,17.4"></polygon></svg></a>
+                            <span class="text-gray-500 text-sm">
+                                <span>6.7 هزار بازدید</span>
+                                <span>14 ساعت پیش</span>
+                            </span>
+                        </div>
+    
+                        <div class="overflow-hidden">
+                            <div class="relative">
+                                <img src="./public/images/sports/2.webp">
+                                <span class="rounded-md absolute left-2 bottom-2 px-1 py-[1px] bg-gray-900 opacity-70 text-white text-sm">08:01</span>
+                            </div>
+                            <a class="mt-2 pl-4" href="/"><span class="truncate">آهنگ جدید مهدی جهانی بنام نگاه آخر</span></a>
+                            <a class="item-owner truncate flex items-center gap-x-1 mt-0.5 w-full text-gray-500 text-sm" href="/"><span>Mohsen Chavoshi | محسن چاوشی</span><svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1" viewBox="0 0 48 48" enable-background="new 0 0 48 48" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><circle fill="#4CAF50" cx="24" cy="24" r="21"></circle><polygon fill="#CCFF90" points="34.6,14.6 21,28.2 15.4,22.6 12.6,25.4 21,33.8 37.4,17.4"></polygon></svg></a>
+                            <span class="text-gray-500 text-sm">
+                                <span>16.8 هزار بازدید</span>
+                                <span>۱ روز پیش</span>
+                            </span>
+                        </div>
+    
+                        <div class="overflow-hidden">
+                            <div class="relative">
+                                <img src="./public/images/sports/3.webp">
+                                <span class="rounded-md absolute left-2 bottom-2 px-1 py-[1px] bg-gray-900 opacity-70 text-white text-sm">08:01</span>
+                            </div>
+                            <a class="mt-2 pl-4" href="/"><span class="truncate">آهنگ جدید اشوان بنام فکر من نباش</span></a>
+                            <a class="item-owner truncate flex items-center gap-x-1 mt-0.5 w-full text-gray-500 text-sm" href="/"><span>میس جادوگر</span><svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1" viewBox="0 0 48 48" enable-background="new 0 0 48 48" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><circle fill="#4CAF50" cx="24" cy="24" r="21"></circle><polygon fill="#CCFF90" points="34.6,14.6 21,28.2 15.4,22.6 12.6,25.4 21,33.8 37.4,17.4"></polygon></svg></a>
+                            <span class="text-gray-500 text-sm">
+                                <span>6.7 هزار بازدید</span>
+                                <span>14 ساعت پیش</span>
+                            </span>
+                        </div>
+    
+                        <div class="overflow-hidden">
+                            <div class="relative">
+                                <img src="./public/images/sports/4.webp">
+                                <span class="rounded-md absolute left-2 bottom-2 px-1 py-[1px] bg-gray-900 opacity-70 text-white text-sm">08:01</span>
+                            </div>
+                            <a class="mt-2" href="/"><span class="truncate">اجرای زنده فرزاد فرزین بنام جواهر</span></a>
+                            <a class="item-owner truncate flex items-center gap-x-1 mt-1 w-full text-gray-500 text-sm" href="/"><span>CINEMA 360 | امیرحسین دربهانی</span></a>
+                            <span class="text-gray-500 text-sm">
+                                <span>6.7 هزار بازدید</span>
+                                <span>14 ساعت پیش</span>
+                            </span>
+                        </div>
+    
+                        <div class="overflow-hidden">
+                            <div class="relative">
+                                <img src="./public/images/sports/5.webp">
+                                <span class="rounded-md absolute left-2 bottom-2 px-1 py-[1px] bg-gray-900 opacity-70 text-white text-sm">08:01</span>
+                            </div>
+                            <a class="mt-2" href="/"><span class="truncate">آهنگ جدید آصف آریا بنام چیه این عشق</span></a>
+                            <a class="item-owner truncate flex items-center gap-x-1 w-full text-gray-500 text-sm" href="/"><span>Mohsen Chavoshi | محسن چاوشی</span><svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1" viewBox="0 0 48 48" enable-background="new 0 0 48 48" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><circle fill="#4CAF50" cx="24" cy="24" r="21"></circle><polygon fill="#CCFF90" points="34.6,14.6 21,28.2 15.4,22.6 12.6,25.4 21,33.8 37.4,17.4"></polygon></svg></a>
+                            <span class="text-gray-500 text-sm">
+                                <span>6.7 هزار بازدید</span>
+                                <span>14 ساعت پیش</span>
+                            </span>
+                        </div>
+                    </section>
+                </div>
+            </section>
+    
+    
+            <section class="relative mb-56">
+                <div class="mt-7">
+                    <h2 class="text-lg">ویژه های آپارات</h2>
+                    <section class="grid mt-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-y-7 gap-x-2">
+    
+                        <div class="overflow-hidden">
+                            <div class="relative">
+                                <img src="./public/images/posters/1.webp">
+                                <span class="rounded-md absolute left-2 bottom-2 px-1 py-[1px] bg-gray-900 opacity-70 text-white text-sm">02:49</span>
+                            </div>
+                            <a class="mt-2 ol-4" href="/"><span class="truncate">آهنگ جدید محسن چاوشی به نام یه پاییز</span></a>
+                            <a class="item-owner truncate flex items-center gap-x-1 mt-0.5 w-full text-gray-500 text-sm" href="/"><span>Mohsen Chavoshi | محسن چاوشی</span><svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1" viewBox="0 0 48 48" enable-background="new 0 0 48 48" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><circle fill="#4CAF50" cx="24" cy="24" r="21"></circle><polygon fill="#CCFF90" points="34.6,14.6 21,28.2 15.4,22.6 12.6,25.4 21,33.8 37.4,17.4"></polygon></svg></a>
+                            <span class="text-gray-500 text-sm">
+                                <span>6.7 هزار بازدید</span>
+                                <span>14 ساعت پیش</span>
+                            </span>
+                        </div>
+    
+                        <div class="overflow-hidden">
+                            <div class="relative">
+                                <img src="./public/images/posters/2.webp">
+                                <span class="rounded-md absolute left-2 bottom-2 px-1 py-[1px] bg-gray-900 opacity-70 text-white text-sm">08:01</span>
+                            </div>
+                            <a class="mt-2 pl-4" href="/"><span class="truncate">گزارش اختصاصی آپارات اسپرت از شروع تمرینات تیم ملی فوتبال</span></a>
+                            <a class="item-owner truncate flex items-center gap-x-1 mt-0.5 w-full text-gray-500 text-sm" href="/"><span>Mohsen Chavoshi | محسن چاوشی</span><svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1" viewBox="0 0 48 48" enable-background="new 0 0 48 48" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><circle fill="#4CAF50" cx="24" cy="24" r="21"></circle><polygon fill="#CCFF90" points="34.6,14.6 21,28.2 15.4,22.6 12.6,25.4 21,33.8 37.4,17.4"></polygon></svg></a>
+                            <span class="text-gray-500 text-sm">
+                                <span>16.8 هزار بازدید</span>
+                                <span>۱ روز پیش</span>
+                            </span>
+                        </div>
+    
+                        <div class="overflow-hidden">
+                            <div class="relative">
+                                <img src="./public/images/posters/3.webp">
+                                <span class="rounded-md absolute left-2 bottom-2 px-1 py-[1px] bg-gray-900 opacity-70 text-white text-sm">08:01</span>
+                            </div>
+                            <a class="mt-2 pl-4" href="/"><span class="truncate">چطوری ویدیو بدون لرزش بگیریم؟ | آموزش کاهش لرزش ویدیو | آموزش ادیت با کپکات</span></a>
+                            <a class="item-owner truncate flex items-center gap-x-1 mt-0.5 w-full text-gray-500 text-sm" href="/"><span>میس جادوگر</span><svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1" viewBox="0 0 48 48" enable-background="new 0 0 48 48" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><circle fill="#4CAF50" cx="24" cy="24" r="21"></circle><polygon fill="#CCFF90" points="34.6,14.6 21,28.2 15.4,22.6 12.6,25.4 21,33.8 37.4,17.4"></polygon></svg></a>
+                            <span class="text-gray-500 text-sm">
+                                <span>6.7 هزار بازدید</span>
+                                <span>14 ساعت پیش</span>
+                            </span>
+                        </div>
+    
+                        <div class="overflow-hidden">
+                            <div class="relative">
+                                <img src="./public/images/posters/5.webp">
+                                <span class="rounded-md absolute left-2 bottom-2 px-1 py-[1px] bg-gray-900 opacity-70 text-white text-sm">08:01</span>
+                            </div>
+                            <a class="mt-2" href="/"><span class="truncate">یه تکنیک باحال برای ساخت استاپ موشن و موزیک ویدیو</span></a>
+                            <a class="item-owner truncate flex items-center gap-x-1 mt-1 w-full text-gray-500 text-sm" href="/"><span>CINEMA 360 | امیرحسین دربهانی</span></a>
+                            <span class="text-gray-500 text-sm">
+                                <span>6.7 هزار بازدید</span>
+                                <span>14 ساعت پیش</span>
+                            </span>
+                        </div>
+    
+                        <div class="overflow-hidden">
+                            <div class="relative">
+                                <img src="./public/images/posters/4.webp">
+                                <span class="rounded-md absolute left-2 bottom-2 px-1 py-[1px] bg-gray-900 opacity-70 text-white text-sm">08:01</span>
+                            </div>
+                            <a class="mt-2" href="/"><span class="truncate">رمز و راز اناربیج اصیل گیلانی به روش مامان جون با بهنام رستمی</span></a>
+                            <a class="item-owner truncate flex items-center gap-x-1 w-full text-gray-500 text-sm" href="/"><span>Mohsen Chavoshi | محسن چاوشی</span><svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1" viewBox="0 0 48 48" enable-background="new 0 0 48 48" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><circle fill="#4CAF50" cx="24" cy="24" r="21"></circle><polygon fill="#CCFF90" points="34.6,14.6 21,28.2 15.4,22.6 12.6,25.4 21,33.8 37.4,17.4"></polygon></svg></a>
+                            <span class="text-gray-500 text-sm">
+                                <span>6.7 هزار بازدید</span>
+                                <span>14 ساعت پیش</span>
+                            </span>
+                        </div>
+    
+                        <div class="overflow-hidden">
+                            <div class="relative">
+                                <img src="./public/images/posters/6.webp">
+                                <span class="rounded-md absolute left-2 bottom-2 px-1 py-[1px] bg-gray-900 opacity-70 text-white text-sm">08:01</span>
+                            </div>
+                            <a class="mt-2" href="/"><span class="truncate">ریسپکت پرایم جدید گروه بهمن | معرفی آخرین خودرو akharinkhodro</span></a>
+                            <a class="item-owner truncate flex items-center gap-x-1 w-full text-gray-500 text-sm" href="/"><span>Mohsen Chavoshi | محسن چاوشی</span><svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1" viewBox="0 0 48 48" enable-background="new 0 0 48 48" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><circle fill="#4CAF50" cx="24" cy="24" r="21"></circle><polygon fill="#CCFF90" points="34.6,14.6 21,28.2 15.4,22.6 12.6,25.4 21,33.8 37.4,17.4"></polygon></svg></a>
+                            <span class="text-gray-500 text-sm">
+                                <span>6.7 هزار بازدید</span>
+                                <span>14 ساعت پیش</span>
+                            </span>
+                        </div>
+    
+                        <div class="overflow-hidden">
+                            <div class="relative">
+                                <img src="./public/images/posters/8.webp">
+                                <span class="rounded-md absolute left-2 bottom-2 px-1 py-[1px] bg-gray-900 opacity-70 text-white text-sm">08:01</span>
+                            </div>
+                            <a class="mt-2" href="/"><span class="truncate">طرزتهیه کتلت با سبزیجات طبیعی در روستا_ زندگی روستایی</span></a>
+                            <a class="item-owner truncate flex items-center gap-x-1 w-full text-gray-500 text-sm" href="/"><span>Mohsen Chavoshi | محسن چاوشی</span><svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1" viewBox="0 0 48 48" enable-background="new 0 0 48 48" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><circle fill="#4CAF50" cx="24" cy="24" r="21"></circle><polygon fill="#CCFF90" points="34.6,14.6 21,28.2 15.4,22.6 12.6,25.4 21,33.8 37.4,17.4"></polygon></svg></a>
+                            <span class="text-gray-500 text-sm">
+                                <span>6.7 هزار بازدید</span>
+                                <span>14 ساعت پیش</span>
+                            </span>
+                        </div>
+    
+                        <div class="overflow-hidden">
+                            <div class="relative">
+                                <img src="./public/images/posters/7.webp">
+                                <span class="rounded-md absolute left-2 bottom-2 px-1 py-[1px] bg-gray-900 opacity-70 text-white text-sm">08:01</span>
+                            </div>
+                            <a class="mt-2" href="/"><span class="truncate">شش فیلم جدید و کمتر دیده شده  2023 - قسمت دوم</span></a>
+                            <a class="item-owner truncate flex items-center gap-x-1 w-full text-gray-500 text-sm" href="/"><span>Mohsen Chavoshi | محسن چاوشی</span><svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1" viewBox="0 0 48 48" enable-background="new 0 0 48 48" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><circle fill="#4CAF50" cx="24" cy="24" r="21"></circle><polygon fill="#CCFF90" points="34.6,14.6 21,28.2 15.4,22.6 12.6,25.4 21,33.8 37.4,17.4"></polygon></svg></a>
+                            <span class="text-gray-500 text-sm">
+                                <span>6.7 هزار بازدید</span>
+                                <span>14 ساعت پیش</span>
+                            </span>
+                        </div>
+    
+                        <div class="overflow-hidden">
+                            <div class="relative">
+                                <img src="./public/images/posters/9.webp">
+                                <span class="rounded-md absolute left-2 bottom-2 px-1 py-[1px] bg-gray-900 opacity-70 text-white text-sm">08:01</span>
+                            </div>
+                            <a class="mt-2 pl-4" href="/"><span class="truncate">گیتی خامنه می خواهد این دختربچه را پیدا کنند!</span></a>
+                            <a class="item-owner truncate flex items-center gap-x-1 w-full text-gray-500 text-sm" href="/"><span>Mohsen Chavoshi | محسن چاوشی</span><svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1" viewBox="0 0 48 48" enable-background="new 0 0 48 48" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><circle fill="#4CAF50" cx="24" cy="24" r="21"></circle><polygon fill="#CCFF90" points="34.6,14.6 21,28.2 15.4,22.6 12.6,25.4 21,33.8 37.4,17.4"></polygon></svg></a>
+                            <span class="text-gray-500 text-sm">
+                                <span>6.7 هزار بازدید</span>
+                                <span>14 ساعت پیش</span>
+                            </span>
+                        </div>
+    
+                        <div class="overflow-hidden">
+                            <div class="relative">
+                                <img src="./public/images/posters/10.webp">
+                                <span class="rounded-md absolute left-2 bottom-2 px-1 py-[1px] bg-gray-900 opacity-70 text-white text-sm">08:01</span>
+                            </div>
+                            <a class="mt-2 pl-4" href="/"><span class="truncate">گزارش اختصاصی آپارات اسپرت از شروع تمرینات تیم ملی فوتبال</span></a>
+                            <a class="item-owner truncate flex items-center gap-x-1 w-full text-gray-500 text-sm" href="/"><span>Mohsen Chavoshi | محسن چاوشی</span><svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1" viewBox="0 0 48 48" enable-background="new 0 0 48 48" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><circle fill="#4CAF50" cx="24" cy="24" r="21"></circle><polygon fill="#CCFF90" points="34.6,14.6 21,28.2 15.4,22.6 12.6,25.4 21,33.8 37.4,17.4"></polygon></svg></a>
+                            <span class="text-gray-500 text-sm">
+                                <span>6.7 هزار بازدید</span>
+                                <span>14 ساعت پیش</span>
+                            </span>
+                        </div>
+                    </section>
+                </div>
+            </section>
+        </div>
+
+    </main>
+
+    <script src="./public/js/app.js"></script>
+</body>
+</html>
